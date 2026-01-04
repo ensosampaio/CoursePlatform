@@ -1,6 +1,6 @@
-package com.enzo.courseplatform.Repository;
+package com.enzo.courseplatform.repository;
 
-import com.enzo.courseplatform.Model.Course;
+import com.enzo.courseplatform.model.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseRepository extends JpaRepository<Course, Integer> {

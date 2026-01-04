@@ -1,4 +1,4 @@
-package com.enzo.courseplatform.Model;
+package com.enzo.courseplatform.model;
 
 import jakarta.persistence.*;
 
