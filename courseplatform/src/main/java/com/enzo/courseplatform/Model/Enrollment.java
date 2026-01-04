@@ -27,4 +27,39 @@ public class Enrollment {
 
     private LocalDateTime enrolledAt = LocalDateTime.now();
 
+
+    public Enrollment() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public LocalDateTime getEnrolledAt() {
+        return enrolledAt;
+    }
+
+    public void setEnrolledAt(LocalDateTime enrolledAt) {
+        this.enrolledAt = enrolledAt;
+    }
 }
