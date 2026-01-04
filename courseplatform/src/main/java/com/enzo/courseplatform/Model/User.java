@@ -5,17 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity
-public class CourseModel {
+import java.time.LocalDateTime;
 
+@Entity
+
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String title;
-    private String description;
-    private Integer workloadHours;
-    private Boolean active = true;
-
-
-
+    private String name;
+    private String email;
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
