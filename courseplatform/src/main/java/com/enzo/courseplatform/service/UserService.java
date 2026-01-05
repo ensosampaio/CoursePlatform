@@ -6,6 +6,8 @@ import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -33,4 +35,8 @@ public class UserService {
         );
     }
 
+
+    public List<UserResponseDTO> getAllUsers() {
+       return userRepository.findAll().stream().map(UserResponseDTO::fromEntity).toList();
+    }
 }
