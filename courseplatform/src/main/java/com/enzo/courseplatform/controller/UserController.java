@@ -1,8 +1,10 @@
 package com.enzo.courseplatform.controller;
 
 import com.enzo.courseplatform.dto.request.CreateUsersRequest;
+import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,5 +23,8 @@ public class UserController {
         userService.createUser(request);
     }
 
+    public UserResponseDTO getUser(@PathVariable Integer id){
+        return userService.getUserById(id);
+    }
 
 }

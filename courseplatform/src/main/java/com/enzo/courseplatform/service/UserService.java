@@ -1,6 +1,7 @@
 package com.enzo.courseplatform.service;
 
 import com.enzo.courseplatform.dto.request.CreateUsersRequest;
+import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -22,4 +23,14 @@ public class UserService {
 
         userRepository.save(user);
     }
+
+    public UserResponseDTO getUserById(Integer id){
+        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User not found"));
+        return new UserResponseDTO(
+                user.getId(),
+                user.getName(),
+                user.getEmail()
+        );
+    }
+
 }
