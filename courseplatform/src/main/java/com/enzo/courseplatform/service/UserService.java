@@ -3,6 +3,7 @@ package com.enzo.courseplatform.service;
 import com.enzo.courseplatform.dto.request.CreateUsersRequest;
 import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
+import com.enzo.courseplatform.exception.ResourceNotFoundException;
 import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class UserService {
     }
 
     public UserResponseDTO getUserById(Integer id){
-        User user = userRepository.findById(id).orElseThrow(() -> new IllegalStateException("User not found"));
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
         return new UserResponseDTO(
                 user.getId(),
                 user.getName(),
@@ -43,7 +44,7 @@ public class UserService {
 
     public void updateUser(Integer id, UpdateUserRequest updateUserRequest){
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("User not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
         user.setName(updateUserRequest.name());
         user.setEmail(updateUserRequest.email());
         userRepository.save(user);
@@ -51,7 +52,7 @@ public class UserService {
 
     public void deleteUser(Integer id){
         if(!userRepository.existsById(id)){
-            throw new IllegalStateException("User not found");
+            throw new ResourceNotFoundException("User not found");
         }
         userRepository.deleteById(id);
     }
