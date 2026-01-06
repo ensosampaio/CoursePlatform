@@ -31,7 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+# Docker
+docker-compose.yml
 
-###YML
-.docker-compose.yml
-.application.yml
+# Spring
+application.yml
