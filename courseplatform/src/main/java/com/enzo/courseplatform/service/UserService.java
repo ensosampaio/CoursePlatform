@@ -1,6 +1,7 @@
 package com.enzo.courseplatform.service;
 
 import com.enzo.courseplatform.dto.request.CreateUsersRequest;
+import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
@@ -39,4 +40,14 @@ public class UserService {
     public List<UserResponseDTO> getAllUsers() {
        return userRepository.findAll().stream().map(UserResponseDTO::fromEntity).toList();
     }
+
+    public void updateUser(Integer id, UpdateUserRequest updateUserRequest){
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
+        user.setName(updateUserRequest.name());
+        user.setEmail(updateUserRequest.email());
+        userRepository.save(user);
+    }
+
+
 }

@@ -1,13 +1,12 @@
 package com.enzo.courseplatform.controller;
 
 import com.enzo.courseplatform.dto.request.CreateUsersRequest;
+import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,16 +19,29 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping
     public List<UserResponseDTO> getALl(){
         return userService.getAllUsers();
     }
+    @GetMapping("/{id}")
+    public UserResponseDTO getUser(@PathVariable Integer id){
+        return userService.getUserById(id);
+    }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody @Valid CreateUsersRequest request){
         userService.createUser(request);
     }
 
-    public UserResponseDTO getUser(@PathVariable Integer id){
-        return userService.getUserById(id);
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUser(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest request){
+        userService.updateUser(id,request);
     }
+
+
+
 
 }
