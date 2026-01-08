@@ -22,3 +22,29 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:8080/api/users/1
+
+###
+GET http://localhost:8080/api/courses
+###
+GET http://localhost:8080/api/courses/1
+###
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+  "title": "Matemática Avançada 1",
+  "description": "Calculo, derivadas e integrais",
+  "workloadHours": 60
+}
+###
+PUT http://localhost:8080/api/courses/1
+Content-Type: application/json
+
+{
+  "title": "Matemática Avançada 1",
+  "description": "Calculo, derivadas e integrais",
+  "workloadHours": 60,
+  "active": false
+}
+###
+DELETE http://localhost:8080/api/courses/1
