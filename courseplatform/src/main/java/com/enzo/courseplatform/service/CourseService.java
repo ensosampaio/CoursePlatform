@@ -37,7 +37,7 @@ public class CourseService {
         return  courseRepository.findAll().stream().map(CourseResponseDTO::fromEntity).toList();
     }
 
-    public void updateUser(Integer id, UpdateCourseRequest request){
+    public void updateCourse(Integer id, UpdateCourseRequest request){
         Course course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course not found"));
         course.setTitle(request.title());
         course.setDescription(request.description());

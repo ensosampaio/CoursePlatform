@@ -39,7 +39,7 @@ public class CourseController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCourse(@PathVariable Integer id, @RequestBody @Valid UpdateCourseRequest request){
-        courseService.updateUser(id,request);
+        courseService.updateCourse(id,request);
     }
 
     @DeleteMapping("/{id}")
