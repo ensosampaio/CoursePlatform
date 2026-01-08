@@ -1,6 +1,7 @@
 package com.enzo.courseplatform.service;
 
 import com.enzo.courseplatform.dto.request.CreateCourseRequest;
+import com.enzo.courseplatform.dto.request.UpdateCourseRequest;
 import com.enzo.courseplatform.dto.response.CourseResponseDTO;
 import com.enzo.courseplatform.exception.ResourceNotFoundException;
 import com.enzo.courseplatform.model.Course;
@@ -36,6 +37,14 @@ public class CourseService {
         return  courseRepository.findAll().stream().map(CourseResponseDTO::fromEntity).toList();
     }
 
-    
+    public void updateUser(Integer id, UpdateCourseRequest request){
+        Course course = courseRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+        course.setTitle(request.title());
+        course.setDescription(request.description());
+        course.setWorkloadHours(request.workloadHours());
+        course.setActive(request.active());
+        courseRepository.save(course);
+
+    }
 
 }
