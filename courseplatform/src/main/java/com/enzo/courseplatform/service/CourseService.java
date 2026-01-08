@@ -47,4 +47,10 @@ public class CourseService {
 
     }
 
+    public void deleteCourse(Integer id){
+        if(!courseRepository.existsById(id)){
+            throw new ResourceNotFoundException("Course not found");
+        }
+        courseRepository.deleteById(id);
+    }
 }
