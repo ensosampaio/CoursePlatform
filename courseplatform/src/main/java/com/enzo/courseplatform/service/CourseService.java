@@ -7,6 +7,8 @@ import com.enzo.courseplatform.model.Course;
 import com.enzo.courseplatform.repository.CourseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class CourseService {
@@ -30,7 +32,10 @@ public class CourseService {
         return CourseResponseDTO.fromEntity(course);
     }
 
-    
+    public List<CourseResponseDTO> getAll(){
+        return  courseRepository.findAll().stream().map(CourseResponseDTO::fromEntity).toList();
+    }
 
+    
 
 }
