@@ -3,7 +3,7 @@ GET http://localhost:8080
 ###
 GET http://localhost:8080/api/users
 ###
-GET http://localhost:8080/api/users/9999
+GET http://localhost:8080/api/users/2
 ###
 POST http://localhost:8080/api/users
 Content-Type: application/json
@@ -53,10 +53,10 @@ POST http://localhost:8080/api/enrollments
 Content-Type: application/json
 
 {
-  "userId": 1,
+  "userId": 2,
   "courseId": 1
 }
 ###
-GET http://localhost:8080/api/enrollments/users/1
+GET http://localhost:8080/api/enrollments/users/2
 ###
 GET http://localhost:8080/api/enrollments/courses/1
