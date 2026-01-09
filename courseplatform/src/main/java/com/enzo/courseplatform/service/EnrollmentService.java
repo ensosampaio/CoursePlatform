@@ -1,0 +1,43 @@
+package com.enzo.courseplatform.service;
+
+import com.enzo.courseplatform.dto.request.CreateEnrollmentRequest;
+import com.enzo.courseplatform.model.Course;
+import com.enzo.courseplatform.model.Enrollment;
+import com.enzo.courseplatform.model.User;
+import com.enzo.courseplatform.repository.CourseRepository;
+import com.enzo.courseplatform.repository.EnrollmentRepository;
+import com.enzo.courseplatform.repository.UserRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+
+@Service
+public class EnrollmentService {
+    private final EnrollmentRepository enrollmentRepository;
+    private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
+
+    public EnrollmentService(EnrollmentRepository enrollmentRepository, CourseRepository courseRepository, UserRepository userRepository) {
+        this.enrollmentRepository = enrollmentRepository;
+        this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
+    }
+
+    public void enroll(CreateEnrollmentRequest request){
+        if(enrollmentRepository.existsByUserIdAndCourseId(request.userId(),  request.courseId()))
+        {
+            throw new IllegalStateException("User already enrolled in this course");
+        }
+        User user = userRepository.findById(request.userId()).orElseThrow(()->new IllegalStateException("User not found"));
+        Course course = courseRepository.findById(request.courseId()).orElseThrow(()->new IllegalStateException("Course not found"));
+        Enrollment enrollment = new Enrollment();
+        enrollment.setUser(user);
+        enrollment.setCourse(course);
+        enrollment.setEnrolledAt(LocalDateTime.now());
+
+        enrollmentRepository.save(enrollment);
+    }
+
+
+
+}
