@@ -1,13 +1,16 @@
 package com.enzo.courseplatform.service;
 
+import com.enzo.courseplatform.dto.request.CreateUserRequest;
 import com.enzo.courseplatform.dto.request.CreateUsersRequest;
 import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.exception.ResourceNotFoundException;
+import com.enzo.courseplatform.model.Role;
 import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,13 +23,15 @@ public class UserService {
     }
 
 
-    public UserResponseDTO createUser(CreateUsersRequest request) {
+    public UserResponseDTO createUser(CreateUserRequest request) {
         User user = new User();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setName(request.name());
+        user.setEmail(request.email());
+        user.setPassword(request.password()); // temporário
+        user.setRole(Role.USER);
 
-       User saved = userRepository.save(user);
-       return UserResponseDTO.fromEntity(saved);
+        User saved = userRepository.save(user);
+        return UserResponseDTO.fromEntity(saved);
     }
 
     public UserResponseDTO getUserById(Integer id){
