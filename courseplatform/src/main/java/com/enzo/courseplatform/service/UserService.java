@@ -1,7 +1,6 @@
 package com.enzo.courseplatform.service;
 
 import com.enzo.courseplatform.dto.request.CreateUserRequest;
-import com.enzo.courseplatform.dto.request.CreateUsersRequest;
 import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.exception.ResourceNotFoundException;
