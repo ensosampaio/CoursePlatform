@@ -3,6 +3,8 @@ package com.enzo.courseplatform.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -14,6 +16,13 @@ public class User {
     private String email;
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    @OneToMany(mappedBy = "user")
+    private List<Enrollment> enrollments = new ArrayList<>();
 
     @PrePersist
     void prePersist() {

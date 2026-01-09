@@ -2,6 +2,9 @@ package com.enzo.courseplatform.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "courses")
 public class Course {
@@ -13,7 +16,12 @@ public class Course {
     private String description;
     private Integer workloadHours;
     private Boolean active = true;
+    @OneToMany(mappedBy = "course")
+    private List<Enrollment> enrollments = new ArrayList<>();
 
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
 
     public Course() {
     }
