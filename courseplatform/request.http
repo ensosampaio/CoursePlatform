@@ -48,3 +48,15 @@ Content-Type: application/json
 }
 ###
 DELETE http://localhost:8080/api/courses/1
+###
+POST http://localhost:8080/api/enrollments
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "courseId": 1
+}
+###
+GET http://localhost:8080/api/enrollments/users/1
+###
+GET http://localhost:8080/api/enrollments/courses/1
