@@ -1,6 +1,7 @@
 package com.enzo.courseplatform.service;
 
 import com.enzo.courseplatform.dto.request.CreateEnrollmentRequest;
+import com.enzo.courseplatform.dto.response.EnrollmentResponseDTO;
 import com.enzo.courseplatform.model.Course;
 import com.enzo.courseplatform.model.Enrollment;
 import com.enzo.courseplatform.model.User;
@@ -10,6 +11,7 @@ import com.enzo.courseplatform.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class EnrollmentService {
@@ -37,7 +39,13 @@ public class EnrollmentService {
 
         enrollmentRepository.save(enrollment);
     }
+    public List<EnrollmentResponseDTO> getByUser(Integer userId){
+        return enrollmentRepository.findByUserId(userId).stream().map(EnrollmentResponseDTO::fromEntity).toList();
+    }
 
+    public List<EnrollmentResponseDTO> getByCourse(Integer courseId){
+        return enrollmentRepository.findByCourseId(courseId).stream().map(EnrollmentResponseDTO::fromEntity).toList();
+    }
 
 
 }
