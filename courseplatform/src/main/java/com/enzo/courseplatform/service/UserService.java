@@ -20,12 +20,13 @@ public class UserService {
     }
 
 
-    public void createUser(CreateUsersRequest request) {
+    public UserResponseDTO createUser(CreateUsersRequest request) {
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
 
-        userRepository.save(user);
+       User saved = userRepository.save(user);
+       return UserResponseDTO.fromEntity(saved);
     }
 
     public UserResponseDTO getUserById(Integer id){

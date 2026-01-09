@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin
 public class UserController {
     private final UserService userService;
 
@@ -30,8 +31,8 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody @Valid CreateUsersRequest request){
-        userService.createUser(request);
+    public UserResponseDTO createUser(@RequestBody @Valid CreateUsersRequest request){
+       return userService.createUser(request);
     }
 
 

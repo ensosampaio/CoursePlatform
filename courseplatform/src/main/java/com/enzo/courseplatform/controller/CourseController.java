@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/courses")
+@CrossOrigin
 public class CourseController {
 
     private final CourseService courseService;
@@ -33,9 +34,11 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCourse(@RequestBody @Valid CreateCourseRequest request){
-        courseService.createCourse(request);
+    public CourseResponseDTO createCourse(@RequestBody @Valid CreateCourseRequest request){
+       return courseService.createCourse(request);
     }
+
+
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCourse(@PathVariable Integer id, @RequestBody @Valid UpdateCourseRequest request){

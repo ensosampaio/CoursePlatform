@@ -20,12 +20,13 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    public void createCourse(CreateCourseRequest request){
+    public CourseResponseDTO createCourse(CreateCourseRequest request){
         Course course = new Course();
         course.setTitle(request.getTitle());
         course.setDescription(request.getDescription());
         course.setWorkloadHours(request.getWorkloadHours());
-        courseRepository.save(course);
+       Course saved = courseRepository.save(course);
+       return CourseResponseDTO.fromEntity(saved);
     }
 
     public CourseResponseDTO getById(Integer id){
