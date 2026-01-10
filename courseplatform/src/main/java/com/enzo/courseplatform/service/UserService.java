@@ -7,6 +7,7 @@ import com.enzo.courseplatform.exception.ResourceNotFoundException;
 import com.enzo.courseplatform.model.Role;
 import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -26,7 +29,7 @@ public class UserService {
         User user = new User();
         user.setName(request.name());
         user.setEmail(request.email());
-        user.setPassword(request.password()); // temporário
+        user.setPassword(passwordEncoder.encode(request.password()));
         user.setRole(Role.USER);
 
         User saved = userRepository.save(user);
