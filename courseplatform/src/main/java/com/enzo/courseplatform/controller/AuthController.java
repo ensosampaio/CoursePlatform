@@ -2,6 +2,7 @@ package com.enzo.courseplatform.controller;
 
 import com.enzo.courseplatform.dto.request.LoginRequest;
 import com.enzo.courseplatform.dto.response.LoginResponse;
+import com.enzo.courseplatform.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
