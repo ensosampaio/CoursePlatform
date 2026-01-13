@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public LoginResponse login (LoginRequest loginRequest) {
@@ -23,12 +25,8 @@ public class AuthService {
         if(!passwordEncoder.matches(loginRequest.password(),user.getPassword())){
             throw new ResourceNotFoundException("Invalid credentials");
         }
-        return new LoginResponse(
-                user.getId(),
-                user.getName(),
-                user.getEmail(),
-                user.getRole().name()
-        );
+        String token = jwtService.generateToken(user.getId(), user.getRole().name());
+        return new LoginResponse(token);
     }
 
 
