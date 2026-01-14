@@ -1,11 +1,12 @@
 package com.enzo.courseplatform.controller;
 
-import com.enzo.courseplatform.dto.request.CreateUsersRequest;
+import com.enzo.courseplatform.dto.request.CreateUserRequest;
 import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,10 +21,13 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<UserResponseDTO> getALl(){
         return userService.getAllUsers();
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public UserResponseDTO getUser(@PathVariable Integer id){
         return userService.getUserById(id);
@@ -31,7 +35,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDTO createUser(@RequestBody @Valid CreateUsersRequest request){
+    public UserResponseDTO createUser(@RequestBody @Valid CreateUserRequest request){
        return userService.createUser(request);
     }
 
