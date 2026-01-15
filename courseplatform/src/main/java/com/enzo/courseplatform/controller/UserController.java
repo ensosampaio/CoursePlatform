@@ -23,8 +23,8 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public List<UserResponseDTO> getALl(){
-        return userService.getAllUsers();
+    public List<UserResponseDTO> getALl(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
+        return userService.getAllUsers(page,size);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
