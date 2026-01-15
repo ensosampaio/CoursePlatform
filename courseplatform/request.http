@@ -1,62 +1,69 @@
-### GET request to example server
-GET http://localhost:8080
-###
-GET http://localhost:8080/api/users
-###
-GET http://localhost:8080/api/users/2
-###
-POST http://localhost:8080/api/users
+POST http://localhost:8080/api/auth/register
 Content-Type: application/json
 
 {
   "name": "Enzo",
-  "email": "enzo@gmail.com"
+  "email": "enzo@gmail.com",
+  "password": "123456"
 }
 ###
-PUT http://localhost:8080/api/users/1
+POST http://localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "name": "Carlos",
-  "email": "carlos@gmail.com"
+"email": "enzo@gmail.com",
+"password": "123456"
 }
+### - Users
+GET http://localhost:8080/api/users?page=0&size=10
+Authorization: Bearer {{TOKEN}}
 ###
-DELETE http://localhost:8080/api/users/1
-
-###
-GET http://localhost:8080/api/courses
+GET http://localhost:8080/api/users/2
+Authorization: Bearer {{TOKEN}}
+### - Courses
+GET http://localhost:8080/api/courses?page=0&size=10
+Authorization: Bearer {{TOKEN}}
 ###
 GET http://localhost:8080/api/courses/1
+Authorization: Bearer {{TOKEN}}
 ###
 POST http://localhost:8080/api/courses
+Authorization: Bearer {{TOKEN}}
 Content-Type: application/json
 
 {
   "title": "Matemática Avançada 1",
-  "description": "Calculo, derivadas e integrais",
+  "description": "Cálculo, derivadas e integrais",
   "workloadHours": 60
 }
 ###
 PUT http://localhost:8080/api/courses/1
+Authorization: Bearer {{TOKEN}}
 Content-Type: application/json
 
 {
   "title": "Matemática Avançada 1",
-  "description": "Calculo, derivadas e integrais",
+  "description": "Cálculo, derivadas e integrais",
   "workloadHours": 60,
   "active": false
 }
 ###
 DELETE http://localhost:8080/api/courses/1
+Authorization: Bearer {{TOKEN}}
 ###
 POST http://localhost:8080/api/enrollments
+Authorization: Bearer {{TOKEN}}
 Content-Type: application/json
 
 {
-  "userId": 2,
   "courseId": 1
 }
 ###
+GET http://localhost:8080/api/me/courses
+Authorization: Bearer {{TOKEN}}
+###
 GET http://localhost:8080/api/enrollments/users/2
+Authorization: Bearer {{TOKEN}}
 ###
 GET http://localhost:8080/api/enrollments/courses/1
+Authorization: Bearer {{TOKEN}}

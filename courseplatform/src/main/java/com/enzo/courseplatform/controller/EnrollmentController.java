@@ -36,8 +36,8 @@ public class EnrollmentController {
     @PreAuthorize("hasRole('USER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public EnrollmentResponseDTO enroll(@RequestBody @Valid CreateEnrollmentRequest request){
-        return enrollmentService.enroll(request);
+    public void enroll(@RequestBody @Valid CreateEnrollmentRequest request){
+        enrollmentService.enroll(request);
     }
 
 
