@@ -1,5 +1,6 @@
 package com.enzo.courseplatform.service;
 
+import com.enzo.courseplatform.config.SecurityUtils;
 import com.enzo.courseplatform.dto.request.CreateEnrollmentRequest;
 import com.enzo.courseplatform.dto.response.EnrollmentResponseDTO;
 import com.enzo.courseplatform.exception.ResourceNotFoundException;
@@ -26,20 +27,21 @@ public class EnrollmentService {
         this.userRepository = userRepository;
     }
 
-    public EnrollmentResponseDTO enroll(CreateEnrollmentRequest request){
-        if(enrollmentRepository.existsByUserIdAndCourseId(request.userId(),  request.courseId()))
-        {
-            throw new ResourceNotFoundException("User already enrolled in this course");
-        }
-        User user = userRepository.findById(request.userId()).orElseThrow(()->new ResourceNotFoundException("User not found"));
+    public void enroll(CreateEnrollmentRequest request){
+        String email = SecurityUtils.getAuthenticatedEmail();
+        User user = userRepository.findByEmail(email).orElseThrow(()->new ResourceNotFoundException("User not found"));
+
         Course course = courseRepository.findById(request.courseId()).orElseThrow(()->new ResourceNotFoundException("Course not found"));
+
+        if(enrollmentRepository.existsByUserIdAndCourseId(user.getId(), course.getId())){
+            throw new IllegalStateException("User already enrolled in this course");
+        }
         Enrollment enrollment = new Enrollment();
         enrollment.setUser(user);
         enrollment.setCourse(course);
         enrollment.setEnrolledAt(LocalDateTime.now());
 
-       Enrollment saved = enrollmentRepository.save(enrollment);
-       return EnrollmentResponseDTO.fromEntity(saved);
+        enrollmentRepository.save(enrollment);
     }
     public List<EnrollmentResponseDTO> getByUser(Integer userId){
         return enrollmentRepository.findByUserId(userId).stream().map(EnrollmentResponseDTO::fromEntity).toList();
