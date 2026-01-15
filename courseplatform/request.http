@@ -59,7 +59,10 @@ Content-Type: application/json
   "courseId": 1
 }
 ###
-GET http://localhost:8080/api/me/courses
+GET http://localhost:8080/api/me
+Authorization: Bearer {{TOKEN}}
+###
+GET http://localhost:8080/api/me/enrollments
 Authorization: Bearer {{TOKEN}}
 ###
 GET http://localhost:8080/api/enrollments/users/2
