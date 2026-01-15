@@ -3,6 +3,9 @@ package com.enzo.courseplatform.service;
 import com.enzo.courseplatform.dto.request.CreateCourseRequest;
 import com.enzo.courseplatform.dto.request.UpdateCourseRequest;
 import com.enzo.courseplatform.dto.response.CourseResponseDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import com.enzo.courseplatform.exception.ResourceNotFoundException;
 import com.enzo.courseplatform.model.Course;
 import com.enzo.courseplatform.repository.CourseRepository;
@@ -34,8 +37,9 @@ public class CourseService {
         return CourseResponseDTO.fromEntity(course);
     }
 
-    public List<CourseResponseDTO> getAll(){
-        return  courseRepository.findAll().stream().map(CourseResponseDTO::fromEntity).toList();
+    public Page<CourseResponseDTO> getAll(int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.findAll(pageable).map(CourseResponseDTO::fromEntity);
     }
 
     public void updateCourse(Integer id, UpdateCourseRequest request){

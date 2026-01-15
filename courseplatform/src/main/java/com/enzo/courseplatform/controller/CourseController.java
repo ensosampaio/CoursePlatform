@@ -6,6 +6,7 @@ import com.enzo.courseplatform.dto.request.UpdateCourseRequest;
 import com.enzo.courseplatform.dto.response.CourseResponseDTO;
 import com.enzo.courseplatform.service.CourseService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class CourseController {
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
-    public List<CourseResponseDTO> getAll(){
-        return courseService.getAll();
+    public Page<CourseResponseDTO> getAll(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
+        return courseService.getAll(page,size);
     }
 
     @PreAuthorize("hasAnyRole('USER','ADMIN')")

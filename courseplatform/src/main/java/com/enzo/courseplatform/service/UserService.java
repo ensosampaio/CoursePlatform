@@ -7,6 +7,9 @@ import com.enzo.courseplatform.exception.ResourceNotFoundException;
 import com.enzo.courseplatform.model.Role;
 import com.enzo.courseplatform.model.User;
 import com.enzo.courseplatform.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -44,8 +47,11 @@ public class UserService {
     }
 
 
-    public List<UserResponseDTO> getAllUsers() {
-       return userRepository.findAll().stream().map(UserResponseDTO::fromEntity).toList();
+    public Page<UserResponseDTO> getAllUsers(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userRepository
+                .findAll(pageable)
+                .map(UserResponseDTO::fromEntity);
     }
 
     public void updateUser(Integer id, UpdateUserRequest updateUserRequest){
