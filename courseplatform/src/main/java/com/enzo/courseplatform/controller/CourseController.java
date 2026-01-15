@@ -7,6 +7,7 @@ import com.enzo.courseplatform.dto.response.CourseResponseDTO;
 import com.enzo.courseplatform.service.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,16 +23,19 @@ public class CourseController {
         this.courseService = courseService;
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping
     public List<CourseResponseDTO> getAll(){
         return courseService.getAll();
     }
 
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/{id}")
     public CourseResponseDTO getById(@PathVariable Integer id){
         return courseService.getById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CourseResponseDTO createCourse(@RequestBody @Valid CreateCourseRequest request){
@@ -39,12 +43,14 @@ public class CourseController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCourse(@PathVariable Integer id, @RequestBody @Valid UpdateCourseRequest request){
         courseService.updateCourse(id,request);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourse(@PathVariable Integer id){
