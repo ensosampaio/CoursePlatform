@@ -6,6 +6,7 @@ import com.enzo.courseplatform.model.Enrollment;
 import com.enzo.courseplatform.service.EnrollmentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +21,19 @@ public class EnrollmentController {
         this.enrollmentService = enrollmentService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/courses/{courseId}")
     public List<EnrollmentResponseDTO> findByCourseId(@PathVariable Integer courseId) {
        return enrollmentService.getByCourse(courseId);
     }
+
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/users/{userId}")
     public List<EnrollmentResponseDTO> findByUserId(@PathVariable Integer userId) {
         return enrollmentService.getByUser(userId);
     }
+
+    @PreAuthorize("hasRole('USER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public EnrollmentResponseDTO enroll(@RequestBody @Valid CreateEnrollmentRequest request){
