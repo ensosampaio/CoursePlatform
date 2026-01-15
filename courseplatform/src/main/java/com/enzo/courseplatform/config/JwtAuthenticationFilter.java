@@ -17,28 +17,40 @@ import java.io.IOException;
 import java.util.List;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
     private final JwtService jwtService;
 
-    public JwtAuthenticationFilter(JwtService jwtService){
+    public JwtAuthenticationFilter(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException{
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
+
         String authHeader = request.getHeader("Authorization");
+
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
-        String authToken = authHeader.substring(7);
-        Claims claims = jwtService.extractClaims(authToken);
-        String userId = claims.getSubject();
-        String role =  claims.get("role", String.class);
 
-        var auth = new UsernamePasswordAuthenticationToken(userId,null, List.of(new SimpleGrantedAuthority("ROLE_" + role)));
+        String token = authHeader.substring(7);
+        Claims claims = jwtService.extractClaims(token);
 
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        String email = claims.getSubject(); // EMAIL
+        String role = claims.get("role", String.class);
+
+        var authentication = new UsernamePasswordAuthenticationToken(
+                email,
+                null,
+                List.of(new SimpleGrantedAuthority("ROLE_" + role))
+        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
-
 }

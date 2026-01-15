@@ -49,10 +49,7 @@ public class AuthService {
             throw new ResourceNotFoundException("Invalid credentials");
         }
 
-        String token = jwtService.generateToken(
-                user.getId(),
-                user.getRole().name()
-        );
+        String token = jwtService.generateToken(user);
 
         return new LoginResponse(token);
     }
