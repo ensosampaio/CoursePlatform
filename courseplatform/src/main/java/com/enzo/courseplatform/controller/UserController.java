@@ -5,6 +5,7 @@ import com.enzo.courseplatform.dto.request.UpdateUserRequest;
 import com.enzo.courseplatform.dto.response.UserResponseDTO;
 import com.enzo.courseplatform.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +25,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public Page<UserResponseDTO> getALl(@RequestParam(defaultValue = "0")int page, @RequestParam(defaultValue = "10")int size){
+    public Page<UserResponseDTO> getAll(@RequestParam(defaultValue = "0") @Min(0) int page, @RequestParam(defaultValue = "10") @Min(1) int size){
         return userService.getAllUsers(page,size);
     }
 
